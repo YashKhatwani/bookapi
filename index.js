@@ -1,20 +1,23 @@
-const express = require("express");
+const express = require("express");//imported express
 
 //database -imported
 const Database = require("./database");
 
+//symbol " / " is known as route
+
 //Initialization
 const OurApp = express();
+
 OurApp.get("/",(request , response) => {
     response.json({message :"Server is working!!"});
 });
 
-//Route -/book
-//Description- To get all books
-//Access -Public
-//Method -Get
-//Params -none
-//Body -none
+//Route         -/book
+//Description   - To get all books
+//Access        -Public
+//Method        -Get
+//Params        -none
+//Body          -none
 
 OurApp.get("/book",(req,res) => {
     return res.json({books: Database.Book});
@@ -48,7 +51,7 @@ OurApp.get("/book/:bookID" , (req,res)=>{
 OurApp.get("/book/c/:category" , (req,res)=>{
     const getBook = Database.Book.filter(
         (book) => book.category.includes(req.params.category)
-    );
+    )
 
     return res.json({ book: getBook})
 });
@@ -61,7 +64,25 @@ OurApp.get("/book/c/:category" , (req,res)=>{
 //Body -none
 
 OurApp.get("/author",(req,res) => {
-    return res.json({books: Database.Author});
+    return res.json({author: Database.Author});
 });
+
+OurApp.get("/author/:aid",(req,res) => {
+    const getAuthor = Database.Author.filter((author) => author.id === req.params.aid);
+
+    return res.json({author: getAuthor});
+});
+
+// OurApp.get("/book/:bookID" , (req,res)=>{
+//     const getBook = Database.Book.filter(
+//         (book) => book.ISBN === req.params.bookID
+//     );
+
+//     return res.json({ book: getBook})
+// });
+
 OurApp.listen(4000, () => console.log("Server is running"));
 //localhost4000 - rootroute
+
+
+//npm run dev
